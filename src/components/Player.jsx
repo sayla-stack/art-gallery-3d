@@ -1,47 +1,56 @@
-import { useFrame , useThree } from '@react-three/fiber';
-import { useRef } from 'react';
-import * as THREE from 'three';
+import { useFrame , useThree } from '@react-three/fiber'
+import { useRef, useEffect } from 'react'
+import * as THREE from 'three'
 
-export default function Player() {
+export default function Player({ mode }) {
     const { camera } = useThree()
-    const velocity = useRef(new THREE.Vector3())
     const direction = new THREE.Vector3()
 
-    const keys = useRef ({
+    const keys = useRef({
         up: false,
         down: false,
         left: false,
         right: false
     })
 
-window.addEventListener('keydown', (e) => {
-    if(e.key === 'ArrowUp') keys.current.up = true
-    if(e.key === 'ArrowDown') keys.current.down = true
-    if(e.key === 'ArrowLeft') keys.current.left = true
-    if(e.key === 'ArrowRight') keys.current.right = true
-})
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if(e.key === 'ArrowUp') keys.current.up = true
+            if(e.key === 'ArrowDown') keys.current.down = true
+            if(e.key === 'ArrowLeft') keys.current.left = true
+            if(e.key === 'ArrowRight') keys.current.right = true
+        }
 
-window.addEventListener('keyup', (e) => {
-    if(e.key === 'ArrowUp') keys.current.up = false
-    if(e.key === 'ArrowDown') keys.current.down = false
-    if(e.key === 'ArrowLeft') keys.current.left = false
-    if(e.key === 'ArrowRight') keys.current.right = false
-})
+        const handleKeyUp = (e) => {
+            if(e.key === 'ArrowUp') keys.current.up = false
+            if(e.key === 'ArrowDown') keys.current.down = false
+            if(e.key === 'ArrowLeft') keys.current.left = false
+            if(e.key === 'ArrowRight') keys.current.right = false
+        }
 
-useFrame(() => {
-    direction.set(0,0,0)
+        window.addEventListener('keydown', handleKeyDown)
+        window.addEventListener('keyup', handleKeyUp)
 
-    if(keys.current.up) direction.z -= 1
-    if(keys.current.down) direction.z += 1
-    if(keys.current.left) direction.x -= 1
-    if(keys.current.right) direction.x += 1
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+            window.removeEventListener('keyup', handleKeyUp)
+        }
+    }, [])
 
-    direction.normalize()
-    direction.applyEuler(camera.rotation)
+    useFrame(() => {
+        if(mode === "inspect") return
+        direction.set(0,0,0)
 
-    camera.position.add(direction.multiplyScalar(0.08))
-})
+        if(keys.current.up) direction.z -= 1
+        if(keys.current.down) direction.z += 1
+        if(keys.current.left) direction.x -= 1
+        if(keys.current.right) direction.x += 1
 
-return null  
+        direction.normalize()
+        direction.applyEuler(camera.rotation)
 
+        camera.position.add(direction.multiplyScalar(0.1))
+    })
+
+    return null  
 }
