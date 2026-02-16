@@ -1,48 +1,43 @@
-import { MeshStandardMaterial } from "three";
+import * as THREE from "three";
+
 export default function GalleryRoom() {
   return (
     <group>
-
       {/* FLOOR */}
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
         receiveShadow
       >
-        <planeGeometry args={[12, 30]} />
-        <meshStandardMaterial color="#f0f0f0" />
+        <planeGeometry args={[40, 40]} />
+        <meshStandardMaterial color="#f3eadb" roughness={0.8} metalness={0.1} />
       </mesh>
 
       {/* CEILING */}
       <mesh
         rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 5, 0]}
+        position={[0, 8, 0]}
       >
-        <planeGeometry args={[12, 30]} />
-        <meshStandardMaterial color="#ffffff" />
+        <planeGeometry args={[40, 40]} />
+        <meshStandardMaterial color="#f3eadb" />
       </mesh>
 
-      {/* WALL LEFT */}
-      <mesh position={[-6, 2.5, 0]} castShadow receiveShadow>
-        <boxGeometry args={[0.3, 5, 30]} />
-        <meshStandardMaterial color="#eaeaea" />
+
+       {/* Central Pillar */}
+      <mesh position={[0, 3, 0]}>
+        <cylinderGeometry args={[4, 4, 6, 64]} />
+        <meshStandardMaterial color="#f3eadb" roughness={0.9} />
       </mesh>
 
-      {/* WALL RIGHT */}
-      <mesh position={[6, 2.5, 0]} castShadow receiveShadow>
-        <boxGeometry args={[0.3, 5, 30]} />
-        <meshStandardMaterial color="#eaeaea" />
+      {/* WALL */}
+      <mesh position={[0, 4, 0]} receiveShadow>
+        <cylinderGeometry args={[12, 12, 8, 128, 1, true]} />
+        <meshStandardMaterial 
+          color="#f3eadb" 
+          side={THREE.BackSide} 
+          roughness={0.9} 
+          metalness={0.05}/>
       </mesh>
 
-      {/* WALL FRONT */}
-      <mesh position={[0, 2.5, -15]} castShadow receiveShadow>
-        <boxGeometry args={[12, 5, 0.3]} />
-        <meshStandardMaterial color="#eaeaea" />
-      </mesh>
-    
-      <mesh position={[0, 2.5, 15]}>
-        <boxGeometry args={[12, 5, 0.3]}/>
-        <meshStandardMaterial color="#eaeaea" />
-      </mesh>
     </group>
   )
 }

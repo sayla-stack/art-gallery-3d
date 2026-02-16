@@ -50,6 +50,17 @@ export default function Player({ mode }) {
         direction.applyEuler(camera.rotation)
 
         camera.position.add(direction.multiplyScalar(0.1))
+        camera.position.x = THREE.MathUtils.clamp(camera.position.x, -10, 10)
+        camera.position.z = THREE.MathUtils.clamp(camera.position.z, -10, 10)
+        const distance = Math.sqrt(
+        camera.position.x ** 2 + camera.position.z ** 2
+        )
+
+        if (distance > 11.5) {
+        camera.position.x *= 11.5 / distance
+        camera.position.z *= 11.5 / distance
+        }
+
     })
 
     return null  
