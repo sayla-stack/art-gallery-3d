@@ -77,3 +77,21 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.pillarText {
+  font-family: sans-serif;
+  font-size: 34px;
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.pillarText .subText {
+  margin-bottom: 100px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  opacity: 0.5;
+}
+    

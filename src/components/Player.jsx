@@ -13,6 +13,7 @@ export default function Player({ mode }) {
         right: false
     })
 
+    const wheelDelta = useRef(0)
     useEffect(() => {
         const handleKeyDown = (e) => {
             if(e.key === 'ArrowUp') keys.current.up = true
@@ -28,12 +29,18 @@ export default function Player({ mode }) {
             if(e.key === 'ArrowRight') keys.current.right = false
         }
 
+        const handleWheel = (e) => {
+            wheelDelta.current += e.deltaY * 0.0005
+        }
+
+        window.addEventListener('wheel', handleWheel)
         window.addEventListener('keydown', handleKeyDown)
         window.addEventListener('keyup', handleKeyUp)
 
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
             window.removeEventListener('keyup', handleKeyUp)
+            window.removeEventListener('wheel', handleWheel)
         }
     }, [])
 
@@ -46,7 +53,21 @@ export default function Player({ mode }) {
         if(keys.current.left) direction.x -= 1
         if(keys.current.right) direction.x += 1
 
+        if (wheelDelta.current !== 0) {
+            direction.z += wheelDelta.current 
+            wheelDelta.current *= 0 
+        }
+
+        // if (direction.length() === 0) return
+
         direction.normalize()
+
+        direction.applyAxisAngle(
+            new THREE.Vector3(0, 1, 0),
+            camera.rotation.y
+        )
+        const speed = 0.15
+        camera.position.add(direction.multiplyScalar(speed))
         direction.applyEuler(camera.rotation)
 
         camera.position.add(direction.multiplyScalar(0.1))
