@@ -29,6 +29,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -83,15 +84,72 @@ button:focus-visible {
   font-size: 34px;
   color: #ffffff;
   font-weight: 600;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   margin: 0;
   letter-spacing: 2px;
+   margin-bottom: 100px;
 }
 
-.pillarText .subText {
-  margin-bottom: 100px;
-  font-size: 13px;
-  letter-spacing: 2px;
-  opacity: 0.5;
+.aboutPanel {
+  width: 700px;
+  display: flex;
+  gap: 30px;
+  background: rgba(255,255,255,0.95);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  color: #222;
+  max-height: 80vh;
+  overflow-y: auto; 
 }
-    
+
+.aboutPanel img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.aboutText h2 {
+  margin: 0 0 10px 0;
+}
+
+.aboutText p {
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.floating {
+  font-size: 14px;
+  opacity: 0.9;
+  text-align: center;
+  animation: pulse 2s infinite ease-in-out;
+  margin-bottom: 200px;
+  margin-left: 200px;
+}
+
+.floating svg {
+  width: 14px;
+  height: 14px;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+
+@media(max-width: 800px){
+  .aboutPanel {
+    width: 90vw;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .aboutPanel img{
+    width: 150px;
+    height: 150px;
+  }
+}
+

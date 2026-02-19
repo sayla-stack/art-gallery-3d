@@ -5,8 +5,8 @@ export const section = [
         image:"/artworks/van-gogh.jpg",
         type: "single",
         content: {
-            photo: "/profile.jpg",
-            description: "Halo! Nama saya Mutiara Sayla, seorang lulusan Teknik Informatika dari Politeknik Negeri Batam, Indonesia. Saya mengkhususkan diri dalam bidang programming dan memiliki minat tinggi dalam di dunia IT. Dengan pengalaman magang di beberapa perusahaan IT, saya unggul dalam menyelesaikan beberapa proyek pengembangan software. Diantaranya saya pernah mengembangkan Modul Training System dalam bentuk Augmented Reality, Mengejar sertifikasi AI & Cybersecurity, dan Membuat beberapa Website sederhana. Dan saat ini saya terbuka untuk mendapatkan pengalaman lainnya di bidang ini"
+            photo: "/.png",
+            description: "Halo! Nama saya Mutiara Sayla, seorang lulusan Teknik Informatika dari Politeknik Negeri Batam, Indonesia. Saya mengkhususkan diri dalam bidang programming dan memiliki minat tinggi dalam di dunia IT. Dengan pengalaman magang di beberapa perusahaan IT, saya unggul dalam menyelesaikan beberapa proyek pengembangan software. Diantaranya saya pernah mengembangkan Automation Center Website,Smart Factory 3D, Modul Training System dalam bentuk Augmented Reality. Dan saat ini saya terbuka untuk mendapatkan pengalaman lainnya di bidang ini"
         }
     },
     {
