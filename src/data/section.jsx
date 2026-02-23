@@ -15,7 +15,7 @@ export const section = [
         image:"/artworks/van-gogh.jpg",
         type: "file",
         content: {
-            file: "/cv.pdf"
+            file: "/export.pdf"
         }
     },
     {
