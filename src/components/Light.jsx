@@ -7,7 +7,7 @@ export default function Lights(){
         intensity={0.8} 
         castShadow
         shadow-mapSize-width={2048}
-        shadow-mapSize-heigth={2048}
+        shadow-mapSize-height={2048}
         />
        
         <directionalLight position={[-5, 8, -5]} intensity={0.4} />

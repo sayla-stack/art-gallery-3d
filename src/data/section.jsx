@@ -2,7 +2,7 @@ export const section = [
     {
         id: "about",
         title: "About Me",
-        image:"/artworks/van-gogh.jpg",
+        image: "/artworks/van-gogh.jpg",
         type: "single",
         content: {
             photo: "/.png",
@@ -10,16 +10,16 @@ export const section = [
         }
     },
     {
-        id:"resume",
+        id: "resume",
         title: "Resume",
-        image:"/artworks/van-gogh.jpg",
+        image: "/artworks/van-gogh.jpg",
         type: "file",
         content: {
             file: "/export.pdf"
         }
     },
     {
-        id:"education",
+        id: "education",
         title: "Education",
         image: "/artworks/van-gogh.jpg",
         type: "timeline",
@@ -45,7 +45,7 @@ export const section = [
                 description: ""
             }
         ]
-    },  
+    },
     {
         id: "experience",
         title: "Experience",
@@ -109,19 +109,19 @@ export const section = [
         type: "gallery",
         content: [
             {
-                title : "Automation Center Website - Vue TS",
+                title: "Automation Center Website - Vue TS",
                 description: "",
             },
             {
-                title : "3D Shelf Smart Factory Website - Three JS",
+                title: "3D Shelf Smart Factory Website - Three JS",
                 description: ""
             },
             {
-                title : "Timesheet & Payroll system for Logistics Company - ERP Implementation ",
+                title: "Timesheet & Payroll system for Logistics Company - ERP Implementation ",
                 description: ""
             },
             {
-                title : "Augmented Reality  Evaporator Air Cooled, Forced Air - Unity AR",
+                title: "Augmented Reality  Evaporator Air Cooled, Forced Air - Unity AR",
                 description: ""
             },
             {
