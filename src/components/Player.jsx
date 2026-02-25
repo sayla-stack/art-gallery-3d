@@ -1,8 +1,8 @@
-import { useFrame , useThree } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useRef, useEffect } from 'react'
 import * as THREE from 'three'
 
-export default function Player({ mode }) {
+export default function Player({ mode, mobileControls }) {
     const { camera } = useThree()
     const direction = new THREE.Vector3()
 
@@ -16,17 +16,17 @@ export default function Player({ mode }) {
     const wheelDelta = useRef(0)
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if(e.key === 'ArrowUp') keys.current.up = true
-            if(e.key === 'ArrowDown') keys.current.down = true
-            if(e.key === 'ArrowLeft') keys.current.left = true
-            if(e.key === 'ArrowRight') keys.current.right = true
+            if (e.key === 'ArrowUp') keys.current.up = true
+            if (e.key === 'ArrowDown') keys.current.down = true
+            if (e.key === 'ArrowLeft') keys.current.left = true
+            if (e.key === 'ArrowRight') keys.current.right = true
         }
 
         const handleKeyUp = (e) => {
-            if(e.key === 'ArrowUp') keys.current.up = false
-            if(e.key === 'ArrowDown') keys.current.down = false
-            if(e.key === 'ArrowLeft') keys.current.left = false
-            if(e.key === 'ArrowRight') keys.current.right = false
+            if (e.key === 'ArrowUp') keys.current.up = false
+            if (e.key === 'ArrowDown') keys.current.down = false
+            if (e.key === 'ArrowLeft') keys.current.left = false
+            if (e.key === 'ArrowRight') keys.current.right = false
         }
 
         const handleWheel = (e) => {
@@ -45,17 +45,22 @@ export default function Player({ mode }) {
     }, [])
 
     useFrame(() => {
-        if(mode === "inspect") return
-        direction.set(0,0,0)
+        if (mode === "inspect") return
+        direction.set(0, 0, 0)
 
-        if(keys.current.up) direction.z -= 1
-        if(keys.current.down) direction.z += 1
-        if(keys.current.left) direction.x -= 1
-        if(keys.current.right) direction.x += 1
+        if (keys.current.up) direction.z -= 1
+        if (keys.current.down) direction.z += 1
+        if (keys.current.left) direction.x -= 1
+        if (keys.current.right) direction.x += 1
+
+        if (mobileControls.forward) direction.z -= 1
+        if (mobileControls.backward) direction.z += 1
+        if (mobileControls.left) direction.x -= 1
+        if (mobileControls.right) direction.x += 1
 
         if (wheelDelta.current !== 0) {
-            direction.z += wheelDelta.current 
-            wheelDelta.current *= 0 
+            direction.z += wheelDelta.current
+            wheelDelta.current *= 0
         }
 
         // if (direction.length() === 0) return
@@ -74,15 +79,15 @@ export default function Player({ mode }) {
         camera.position.x = THREE.MathUtils.clamp(camera.position.x, -10, 10)
         camera.position.z = THREE.MathUtils.clamp(camera.position.z, -10, 10)
         const distance = Math.sqrt(
-        camera.position.x ** 2 + camera.position.z ** 2
+            camera.position.x ** 2 + camera.position.z ** 2
         )
 
         if (distance > 11.5) {
-        camera.position.x *= 11.5 / distance
-        camera.position.z *= 11.5 / distance
+            camera.position.x *= 11.5 / distance
+            camera.position.z *= 11.5 / distance
         }
 
     })
 
-    return null  
+    return null
 }

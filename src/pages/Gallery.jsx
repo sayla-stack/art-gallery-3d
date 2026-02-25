@@ -109,6 +109,19 @@ export default function Gallery() {
             }
         }
     })
+
+    const exitInspect = () => {
+        setMode("explore")
+        targetPosition.current.set(0, 2, 8)
+        setActiveSection(null)
+    }
+
+    const [mobileControls, setMobileControls] = useState({
+        up: false,
+        down: false,
+        left: false,
+        right: false,
+    })
     return (
         <>
             <Lights />
@@ -139,7 +152,7 @@ export default function Gallery() {
             </group>
 
             <CameraController targetPosition={targetPosition} mode={mode} />
-            <Player mode={mode} />
+            <Player mode={mode} mobileControls={mobileControls} />
             <FirstPersonControls makeDefault enabled={mode === "explore"} />
 
             {/* About Me */}
@@ -159,12 +172,87 @@ export default function Gallery() {
             {mode === "inspect" && activeSection?.id === "resume" && (
                 <ResumePanel
                     section={activeSection}
-                    onClose={() => {
-                        setMode("explore")
-                        targetPosition.current.set(0, 2, 8)
-                        setActiveSection(null)
-                    }}
+                    onClose={exitInspect}
                 />
+            )}
+
+            {/* Education Panel */}
+            {mode === "inspect" && activeSection?.id === "education" && (
+                <EducationPanel
+                    section={activeSection}
+                    onClose={exitInspect}
+                />
+            )}
+
+            {/* Experience Panel */}
+            {mode === "inspect" && activeSection?.id === "experience" && (
+                <ExperiencePanel
+                    section={activeSection}
+                    onClose={exitInspect}
+                />
+            )}
+
+            {/* Community Panel */}
+            {mode === "inspect" && activeSection?.id === "community" && (
+                <CommunityPanel
+                    section={activeSection}
+                    onClose={exitInspect}
+                />
+            )}
+
+            {/* Projects Panel */}
+            {mode === "inspect" && activeSection?.id === "projects" && (
+                <ProjectsPanel
+                    section={activeSection}
+                    onClose={exitInspect}
+                />
+            )}
+
+            {/* Certificates Panel */}
+            {mode === "inspect" && activeSection?.id === "certificates" && (
+                <CertificatesPanel
+                    section={activeSection}
+                    onClose={exitInspect}
+                />
+            )}
+
+            {/* Social Media Panel */}
+            {mode === "inspect" && activeSection?.id === "socialMedia" && (
+                <SocialMediaPanel
+                    section={activeSection}
+                    onClose={exitInspect}
+                />
+            )}
+
+            {/* Close Button */}
+            {mode === "inspect" && (
+                <Html fullscreen style={{ pointerEvents: "none" }}>
+                    <div style={{
+                        position: "absolute",
+                        top: "20px",
+                        right: "20px",
+                        pointerEvents: "all",
+                        backgroundColor: "rgba(0, 0, 0, 0.7)",
+                        color: "white",
+                        borderRadius: "50%",
+                        border: "none",
+                        width: "44px",
+                        height: "44px",
+                    }}>
+                        <button style={{
+                            backgroundColor: "transparent",
+                            border: "none",
+                            width: "100%",
+                            height: "100%",
+                            cursor: "pointer",
+                        }} onClick={exitInspect}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </Html>
             )}
 
             {/* Resume */}
@@ -223,6 +311,45 @@ export default function Gallery() {
                     />
                 )
             })}
+
+            {/* Mobile Controls */}
+            {mode === "explore" && (
+                <Html fullscreen style={{ pointerEvents: "none" }}>
+                    <div style={{
+                        position: "fixed",
+                        bottom: "40px",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        display: "grid",
+                        gridTemplateColumns: "60px 60px 60px",
+                        gap: "10px",
+                        pointerEvents: "auto"
+                    }}>
+
+                        <div></div>
+                        <button
+                            onTouchStart={() => setMobileControls(s => ({ ...s, up: true }))}
+                            onTouchEnd={() => setMobileControls(s => ({ ...s, up: false }))}
+                        >↑</button>
+                        <div></div>
+
+                        <button
+                            onTouchStart={() => setMobileControls(s => ({ ...s, left: true }))}
+                            onTouchEnd={() => setMobileControls(s => ({ ...s, left: false }))}
+                        >←</button>
+
+                        <button
+                            onTouchStart={() => setMobileControls(s => ({ ...s, down: true }))}
+                            onTouchEnd={() => setMobileControls(s => ({ ...s, down: false }))}
+                        >↓</button>
+
+                        <button
+                            onTouchStart={() => setMobileControls(s => ({ ...s, right: true }))}
+                            onTouchEnd={() => setMobileControls(s => ({ ...s, right: false }))}
+                        >→</button>
+                    </div>
+                </Html>
+            )}
         </>
     )
 }
