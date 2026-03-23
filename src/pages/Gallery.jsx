@@ -10,6 +10,12 @@ import Player from "../components/Player"
 import FirstPersonControls from '../components/FirstPersonControls'
 import { section } from "../data/section"
 import ResumePanel from "../components/ResumePanel"
+import AboutPanel from "../components/AboutPanel"
+import TimelinePanel from "../components/TimelinePanel"
+import GridPanel from "../components/GridPanel"
+import SocialMediaPanel from "../components/SocialMediaPanel"
+import Joystick from "../components/Joystick"
+
 
 const pillarSections = [
     { id: 1, title: "About Me", image: "/artworks/van-gogh.jpg" },
@@ -25,9 +31,8 @@ const wallSections = [
     { id: 6, title: "Social Media", image: "/artworks/van-gogh.jpg" }
 ]
 
-export default function Gallery() {
-    const targetPosition = useRef(new THREE.Vector3(0, 2, 8))
-    const [mode, setMode] = useState("explore")
+export default function Gallery({ mode, setMode, mobileControls }) {
+    const targetPosition = useRef(new THREE.Vector3(0, 2.5, 8))
 
     const pillarRadius = 4
     const wallRadius = 11.9
@@ -116,12 +121,6 @@ export default function Gallery() {
         setActiveSection(null)
     }
 
-    const [mobileControls, setMobileControls] = useState({
-        up: false,
-        down: false,
-        left: false,
-        right: false,
-    })
     return (
         <>
             <Lights />
@@ -137,18 +136,6 @@ export default function Gallery() {
                         About Me
                     </div>
                 </Html>
-
-                <group ref={floatingRef} position={[0, -0.6, 0]}>
-                    <Html transform>
-                        <div className="subText floating">
-                            Main Exhibition
-                            <br />
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-1">
-                                <path fillRule="evenodd" d="M9.47 15.28a.75.75 0 0 0 1.06 0l4.25-4.25a.75.75 0 1 0-1.06-1.06L10 13.69 6.28 9.97a.75.75 0 0 0-1.06 1.06l4.25 4.25ZM5.22 6.03l4.25 4.25a.75.75 0 0 0 1.06 0l4.25-4.25a.75.75 0 0 0-1.06-1.06L10 8.69 6.28 4.97a.75.75 0 0 0-1.06 1.06Z" clipRule="evenodd" />
-                            </svg>
-                        </div>
-                    </Html>
-                </group>
             </group>
 
             <CameraController targetPosition={targetPosition} mode={mode} />
@@ -157,15 +144,10 @@ export default function Gallery() {
 
             {/* About Me */}
             {mode === "inspect" && activeSection?.id === "about" && (
-                <Html center scale={0.8}>
-                    <div className="aboutPanel">
-                        <img src={activeSection.content.photo} alt="profile" />
-                        <div className="aboutText">
-                            <h2>{activeSection.title}</h2>
-                            <p>{activeSection.content.description}</p>
-                        </div>
-                    </div>
-                </Html>
+                <AboutPanel
+                    section={activeSection}
+                    onClose={exitInspect}
+                />
             )}
 
             {/* Resume Panel */}
@@ -176,41 +158,17 @@ export default function Gallery() {
                 />
             )}
 
-            {/* Education Panel */}
-            {mode === "inspect" && activeSection?.id === "education" && (
-                <EducationPanel
+            {/* Education/Experience/Community Panel */}
+            {mode === "inspect" && (activeSection?.id === "education" || activeSection?.id === "experience" || activeSection?.id === "community") && (
+                <TimelinePanel
                     section={activeSection}
                     onClose={exitInspect}
                 />
             )}
 
-            {/* Experience Panel */}
-            {mode === "inspect" && activeSection?.id === "experience" && (
-                <ExperiencePanel
-                    section={activeSection}
-                    onClose={exitInspect}
-                />
-            )}
-
-            {/* Community Panel */}
-            {mode === "inspect" && activeSection?.id === "community" && (
-                <CommunityPanel
-                    section={activeSection}
-                    onClose={exitInspect}
-                />
-            )}
-
-            {/* Projects Panel */}
-            {mode === "inspect" && activeSection?.id === "projects" && (
-                <ProjectsPanel
-                    section={activeSection}
-                    onClose={exitInspect}
-                />
-            )}
-
-            {/* Certificates Panel */}
-            {mode === "inspect" && activeSection?.id === "certificates" && (
-                <CertificatesPanel
+            {/* Projects/Certificates Panel */}
+            {mode === "inspect" && (activeSection?.id === "projects" || activeSection?.id === "certificates") && (
+                <GridPanel
                     section={activeSection}
                     onClose={exitInspect}
                 />
@@ -222,37 +180,6 @@ export default function Gallery() {
                     section={activeSection}
                     onClose={exitInspect}
                 />
-            )}
-
-            {/* Close Button */}
-            {mode === "inspect" && (
-                <Html fullscreen style={{ pointerEvents: "none" }}>
-                    <div style={{
-                        position: "absolute",
-                        top: "20px",
-                        right: "20px",
-                        pointerEvents: "all",
-                        backgroundColor: "rgba(0, 0, 0, 0.7)",
-                        color: "white",
-                        borderRadius: "50%",
-                        border: "none",
-                        width: "44px",
-                        height: "44px",
-                    }}>
-                        <button style={{
-                            backgroundColor: "transparent",
-                            border: "none",
-                            width: "100%",
-                            height: "100%",
-                            cursor: "pointer",
-                        }} onClick={exitInspect}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M18 6L6 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </button>
-                    </div>
-                </Html>
             )}
 
             {/* Resume */}
@@ -312,44 +239,6 @@ export default function Gallery() {
                 )
             })}
 
-            {/* Mobile Controls */}
-            {mode === "explore" && (
-                <Html fullscreen style={{ pointerEvents: "none" }}>
-                    <div style={{
-                        position: "fixed",
-                        bottom: "40px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        display: "grid",
-                        gridTemplateColumns: "60px 60px 60px",
-                        gap: "10px",
-                        pointerEvents: "auto"
-                    }}>
-
-                        <div></div>
-                        <button
-                            onTouchStart={() => setMobileControls(s => ({ ...s, up: true }))}
-                            onTouchEnd={() => setMobileControls(s => ({ ...s, up: false }))}
-                        >↑</button>
-                        <div></div>
-
-                        <button
-                            onTouchStart={() => setMobileControls(s => ({ ...s, left: true }))}
-                            onTouchEnd={() => setMobileControls(s => ({ ...s, left: false }))}
-                        >←</button>
-
-                        <button
-                            onTouchStart={() => setMobileControls(s => ({ ...s, down: true }))}
-                            onTouchEnd={() => setMobileControls(s => ({ ...s, down: false }))}
-                        >↓</button>
-
-                        <button
-                            onTouchStart={() => setMobileControls(s => ({ ...s, right: true }))}
-                            onTouchEnd={() => setMobileControls(s => ({ ...s, right: false }))}
-                        >→</button>
-                    </div>
-                </Html>
-            )}
         </>
     )
 }
